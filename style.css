@@ -28,10 +28,10 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1); /* start smaller */
-  transform-origin: center center; /* scaling stays centered */
-  font-size: clamp(2rem, 6vw, 5rem); /* smaller starting size */
+  transform-origin: center center;
+  font-size: clamp(2rem, 6vw, 5rem);
   font-weight: 900;
-  white-space: nowrap; /* force single line */
+  white-space: nowrap;
   background: linear-gradient(to right, #f2f2f2 50%, #1a1a1a 50%);
   background-size: 200% 100%;
   background-position: 100% 0;
@@ -54,23 +54,41 @@ body {
   font-weight: bold;
   font-size: 1rem;
   opacity: 0;
-  transition: opacity 1s ease;
+  transition: opacity 0.8s ease;
 }
 
+/* START STATES (off screen) */
 #navbar .nav-left {
-  transform: translateX(-100px);
-  transition: transform 1s ease;
+  transform: translateX(-150%);
 }
 
 #navbar .nav-right {
-  transform: translateX(100px);
-  transition: transform 1s ease;
+  transform: translateX(150%);
 }
 
 #navbar .nav-center {
   display: flex;
   gap: 2rem;
-  transform: translateY(-100px);
+  transform: translateY(-200%);
+}
+
+/* ANIMATED STATES */
+#navbar.active {
+  opacity: 1;
+}
+
+#navbar.active .nav-left {
+  transform: translateX(0);
+  transition: transform 1s ease;
+}
+
+#navbar.active .nav-right {
+  transform: translateX(0);
+  transition: transform 1s ease;
+}
+
+#navbar.active .nav-center {
+  transform: translateY(0);
   transition: transform 1s ease;
 }
 
