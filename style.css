@@ -1,19 +1,31 @@
-/* General Reset */
-* {
+/* Reset */
+body, html {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  height: 200vh; /* for scroll fade */
+  height: 100%;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
   background: black;
   color: white;
-  font-family: 'Arial', sans-serif;
-  overflow-x: hidden;
 }
 
-/* Navbar Layout */
+/* Intro container */
+.intro {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro-text {
+  font-size: 3rem;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: fadeScale 2s forwards;
+}
+
+/* Navbar layout */
 .navbar {
   position: fixed;
   top: 0;
@@ -23,77 +35,35 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-  z-index: 10;
-  pointer-events: none; /* stops blocking scroll */
+  pointer-events: none; /* prevent blocking intro scroll */
 }
 
-.navbar a {
-  color: white;
-  text-decoration: none;
-  margin: 0 20px;
-  pointer-events: auto;
-}
-
-/* Navbar animations (initial hidden states) */
-.nav-left,
-.nav-center a,
-.nav-right {
+.nav-left, .nav-center, .nav-right {
+  pointer-events: auto; /* clickable */
   opacity: 0;
-  position: relative;
+  transform: translateY(-50px);
+  animation: slideDown 1.5s forwards;
+  animation-delay: 2s; /* start after intro text */
 }
 
-/* Intro Text */
-.intro {
-  height: 100vh;
+.nav-center {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 30px;
 }
 
-#intro-text {
-  font-size: 3rem;
-  text-align: center;
+/* Animations */
+@keyframes fadeScale {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes slideDown {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade out on scroll */
+body.scrolled .intro-text {
   opacity: 0;
-  transform: scale(0.8);
-  transition: transform 1.5s ease, opacity 1.5s ease, color 1.5s ease;
-}
-#intro-text.active {
-  opacity: 1;
-  transform: scale(1.4);
-  color: #00ffff;
-}
-
-/* Navbar Animation Classes */
-.nav-left.active {
-  animation: slideLeftIn 1.5s ease forwards;
-}
-.nav-center a:nth-child(1) {
-  animation: slideDownIn 1.5s ease forwards;
-}
-.nav-center a:nth-child(2) {
-  animation: slideDownIn 1.5s ease forwards;
-  animation-delay: 0.1s;
-}
-.nav-right.active {
-  animation: slideRightIn 1.5s ease forwards;
-}
-
-@keyframes slideLeftIn {
-  from { transform: translateX(-100%); opacity: 0; }
-  to   { transform: translateX(0); opacity: 1; }
-}
-@keyframes slideDownIn {
-  from { transform: translateY(-100%); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
-}
-@keyframes slideRightIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0); opacity: 1; }
-}
-
-/* Scroll Fade Out */
-#intro-text {
-  transition: opacity 0.3s ease;
+  transition: opacity 1s ease;
 }
