@@ -6,24 +6,18 @@ window.addEventListener("load", () => {
   const navRight = document.querySelector(".nav-right");
   const navCenter = document.querySelector(".nav-center");
 
-  // Step 1: Reveal text color wipe
+  // Step 1: Reveal text with gradient wipe
   setTimeout(() => {
     introText.style.backgroundPosition = "0 0";
   }, 500);
 
-  // Step 2: Scale up text
+  // Step 2: Scale up text while staying centered
   setTimeout(() => {
-    introText.style.transform = "scale(1.1)";
+    introText.style.transform = "translate(-50%, -50%) scale(1.3)";
 
-    // Step 3: Bring in navigation
+    // Step 3: Bring in navbar
     setTimeout(() => {
-      navbar.style.transition = "opacity 1s ease";
       navbar.style.opacity = 1;
-
-      navLeft.style.transition = "transform 1s ease";
-      navRight.style.transition = "transform 1s ease";
-      navCenter.style.transition = "transform 1s ease";
-
       navLeft.style.transform = "translateX(0)";
       navRight.style.transform = "translateX(0)";
       navCenter.style.transform = "translateY(0)";
