@@ -1,25 +1,30 @@
-// Intro animation
 window.addEventListener("load", () => {
-  const introText = document.querySelector(".intro-text");
-  const navbar = document.getElementById("navbar");
+  const introText = document.getElementById("intro-text");
+  const navLeft = document.querySelector(".nav-left");
+  const navCenterLinks = document.querySelectorAll(".nav-center a");
+  const navRight = document.querySelector(".nav-right");
 
-  // Step 1: Gradient wipe
+  // Trigger intro text scaling
   setTimeout(() => {
-    introText.style.backgroundPosition = "0 0";
-  }, 500);
+    introText.classList.add("active");
 
-  // Step 2: Scale up text + bring in navbar simultaneously
-  setTimeout(() => {
-    introText.style.transform = "translate(-50%, -50%) scale(1.3)";
-    navbar.classList.add("active");
-  }, 2000);
+    // Sync navbar animations
+    navLeft.classList.add("active");
+    navRight.classList.add("active");
+    navCenterLinks.forEach(link => link.style.animationPlayState = "running");
+
+  }, 500); // delay so it's noticeable
 });
 
-// Scroll fade effect for intro text
+// Scroll fade effect
 window.addEventListener("scroll", () => {
-  const introText = document.querySelector(".intro-text");
-  const scrollY = window.scrollY;
-  const fadeEnd = window.innerHeight; // fade over one viewport height
-  let opacity = 1 - scrollY / fadeEnd;
-  introText.style.opacity = Math.max(0, Math.min(1, opacity));
+  const introText = document.getElementById("intro-text");
+  let scrollY = window.scrollY;
+  let fadePoint = window.innerHeight / 1.2;
+
+  if (scrollY < fadePoint) {
+    introText.style.opacity = 1 - scrollY / fadePoint;
+  } else {
+    introText.style.opacity = 0;
+  }
 });
