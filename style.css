@@ -1,4 +1,4 @@
-/* RESET */
+/* General Reset */
 * {
   margin: 0;
   padding: 0;
@@ -6,99 +6,94 @@
 }
 
 body {
-  background-color: #121212;
-  color: #f2f2f2;
-  font-family: Helvetica, Arial, sans-serif;
+  height: 200vh; /* for scroll fade */
+  background: black;
+  color: white;
+  font-family: 'Arial', sans-serif;
   overflow-x: hidden;
 }
 
-/* INTRO */
-#intro {
+/* Navbar Layout */
+.navbar {
   position: fixed;
-  inset: 0;
-  background-color: #121212;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.intro-text {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1); /* start smaller */
-  transform-origin: center center;
-  font-size: clamp(2rem, 6vw, 5rem);
-  font-weight: 900;
-  white-space: nowrap;
-  background: linear-gradient(to right, #f2f2f2 50%, #1a1a1a 50%);
-  background-size: 200% 100%;
-  background-position: 100% 0;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: background-position 1.5s ease, transform 2s ease, opacity 0.3s;
-  z-index: 1;
-}
-
-/* NAVBAR */
-#navbar {
-  position: fixed;
-  top: 1.5rem;
+  top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
+  padding: 20px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  font-size: 1rem;
-  opacity: 0;
-  transition: opacity 0.8s ease;
+  z-index: 10;
+  pointer-events: none; /* stops blocking scroll */
 }
 
-/* START STATES (off screen) */
-#navbar .nav-left {
-  transform: translateX(-150%);
-}
-
-#navbar .nav-right {
-  transform: translateX(150%);
-}
-
-#navbar .nav-center {
-  display: flex;
-  gap: 2rem;
-  transform: translateY(-200%);
-}
-
-/* ANIMATED STATES */
-#navbar.active {
-  opacity: 1;
-}
-
-#navbar.active .nav-left {
-  transform: translateX(0);
-  transition: transform 1s ease;
-}
-
-#navbar.active .nav-right {
-  transform: translateX(0);
-  transition: transform 1s ease;
-}
-
-#navbar.active .nav-center {
-  transform: translateY(0);
-  transition: transform 1s ease;
-}
-
-#navbar a {
-  color: #f2f2f2;
+.navbar a {
+  color: white;
   text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s;
+  margin: 0 20px;
+  pointer-events: auto;
 }
 
-#navbar a:hover {
-  color: #999;
+/* Navbar animations (initial hidden states) */
+.nav-left,
+.nav-center a,
+.nav-right {
+  opacity: 0;
+  position: relative;
+}
+
+/* Intro Text */
+.intro {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#intro-text {
+  font-size: 3rem;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: transform 1.5s ease, opacity 1.5s ease, color 1.5s ease;
+}
+#intro-text.active {
+  opacity: 1;
+  transform: scale(1.4);
+  color: #00ffff;
+}
+
+/* Navbar Animation Classes */
+.nav-left.active {
+  animation: slideLeftIn 1.5s ease forwards;
+}
+.nav-center a:nth-child(1) {
+  animation: slideDownIn 1.5s ease forwards;
+}
+.nav-center a:nth-child(2) {
+  animation: slideDownIn 1.5s ease forwards;
+  animation-delay: 0.1s;
+}
+.nav-right.active {
+  animation: slideRightIn 1.5s ease forwards;
+}
+
+@keyframes slideLeftIn {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideDownIn {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes slideRightIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Scroll Fade Out */
+#intro-text {
+  transition: opacity 0.3s ease;
 }
